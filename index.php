@@ -31,14 +31,13 @@
     <!-- Section-->
     <section class="py-5">
         <?php
-        var_dump($_GET);
 
         $page = 'home';
         if(array_key_exists('page', $_GET)){
             $page = $_GET['page'];
         }
 
-        include 'pages/' . $page . '.html';
+        include 'pages/' . $page . '.php';
         ?>
     </section>
     <!-- Footer-->
