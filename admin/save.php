@@ -1,17 +1,14 @@
 <?php
 
-var_dump($_GET);
-var_dump($_POST);
-
+require_once '../app/config/db.php';
 $product = $_POST;
 
 // gestion checkbox
 if(empty($product['is_sale']))
     $product['is_sale'] = 0;
 
-die;
 
-
+var_dump($product);
 $stmt = $pdo->prepare('INSERT INTO products (
     name, 
     price_min, 
@@ -31,6 +28,6 @@ $stmt = $pdo->prepare('INSERT INTO products (
     :image, 
     :is_sale, 
     :rating, 
-    :product_type
+    :product_type)
 ');
 $stmt->execute($product); // Paramètres nommés
