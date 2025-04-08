@@ -7,16 +7,11 @@ $product = $_POST;
 if(empty($product['is_sale']))
     $product['is_sale'] = 0;
 
-if ($product['price'] === '')
-    $product['price'] = null;
+$sanitize = ['price', 'sale_price', 'rating', 'price_min', 'price_max'];
+foreach($sanitize as $field)
+    if ($product[$field] === '')
+        $product[$field] = null;
 
-if ($product['sale_price'] === '')
-    $product['sale_price'] = null;
-
-if ($product['rating'] === '')
-    $product['rating'] = null;
-
-var_dump($product);
 $stmt = $pdo->prepare('INSERT INTO products (
     name, 
     price_min, 
