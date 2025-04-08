@@ -5,13 +5,18 @@
 
         require_once 'app/config/db.php';
 
-        $stmt = $pdo->query('SELECT id, name, image, rating, price_min, price_max FROM products');
+        $stmt = $pdo->query('SELECT id, name, image, rating, price_min, price_max, sale_price, price FROM products');
 
         while ($product = $stmt->fetch()) {
         ?>
             <div class="col mb-5">
                 <div class="card h-100">
-                    <!-- Product image-->
+                    <?php
+                    if ($product['sale_price'] > 0) {
+                        echo '<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>';
+                    }
+                    ?>
+
                     <img class="card-img-top" src="<?php echo $product['image']; ?>" alt="..." />
                     <!-- Product details-->
                     <div class="card-body p-4">
@@ -33,13 +38,15 @@
                             ?>
 
                             <?php
-             
+
                             if ($product['price_min'] && $product['price_max']) {
-                                echo '$40.00 - $80.00';
-                            } elseif (true) {
-                                echo '<span class="text-muted text-decoration-line-through">$20.00</span>$18.00';
+                                echo '$' . $product['price_min'] . ' - $' . $product['price_max'];
+                                // printf('$%s - $%s', $product['price_min'], $product['price_max']);
+                            } elseif ($product['sale_price']) {
+                                // echo '<span class="text-muted text-decoration-line-through">$20.00</span>$18.00';
+                                printf('<span class="text-muted text-decoration-line-through">$%s</span>$%s', $product['price'], $product['sale_price']);
                             } else {
-                                echo '$40.00';
+                                echo '$' . $product['price'];
                             }
                             ?>
 
