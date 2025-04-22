@@ -6,7 +6,7 @@
         require_once 'app/config/db.php';
 
         $stmt = $pdo->query('SELECT id, name, image, rating, price_min, price_max, sale_price, price FROM products');
-
+        $default_image = 'https://png.pngtree.com/background/20230429/original/pngtree-rose-3d-flowers-rendering-generative-ai-art-picture-image_2499533.jpg';
         while ($product = $stmt->fetch()) {
         ?>
             <div class="col mb-5">
@@ -17,12 +17,13 @@
                     }
                     ?>
 
-                    <img class="card-img-top" src="<?php echo $product['image']; ?>" alt="..." />
+                    <img class="card-img-top" src="<?= $product['image'] ?? $default_image; ?>" alt="..." />
+
                     <!-- Product details-->
                     <div class="card-body p-4">
                         <div class="text-center">
                             <!-- Product name-->
-                            <h5 class="fw-bolder"><?php echo $product['name']; ?></h5>
+                            <h5 class="fw-bolder"><?= $product['name']; ?></h5>
                             <?php
                             if ($product['rating'] > 0) {
                             ?>
